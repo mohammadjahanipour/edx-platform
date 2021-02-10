@@ -382,13 +382,27 @@ class LoginTest(SiteMixin, CacheIsolationTestCase):
         response, _audit_log = self._login_response(self.user_email, self.password)
         self._assert_response(response, success=True)
 
-    @override_settings(RATELIMIT_ENABLE=False)
-    def test_excessive_login_attempts(self):
-        # try logging in 30 times, the default limit in the number of failed
+    @override_settings(LOGISTRATION_RATELIMIT_RATE='100/5m')
+    @override_settings(LOGISTRATION_PER_EMAIL_RATELIMIT_RATE='5/5m')
+    def test_excessive_login_attempts_by_email(self):
+        # try logging in 3 times, the overridden limit for the number of failde
         # login attempts in one 5 minute period before the rate gets limited
-        for i in range(30):
+        for i in range(5):
             password = u'test_password{0}'.format(i)
             self._login_response(self.user_email, password)
+        # check to see if this response indicates that this was ratelimited
+        response, _audit_log = self._login_response(self.user_email, 'wrong_password')
+        self._assert_response(response, success=False, value='Too many failed login attempts')
+
+    @override_settings(LOGISTRATION_RATELIMIT_RATE='5/5m')
+    @override_settings(LOGISTRATION_PER_EMAIL_RATELIMIT_RATE='10/5m')
+    def test_excessive_login_attempts_by_ip(self):
+        # try logging in 3 times, the overridden limit for the number of failde
+        # login attempts in one 5 minute period before the rate gets limited
+        for i in range(5):
+            email = f'test_email{i}@example.com'
+            password = f'test_password{i}'
+            self._login_response(email, password)
         # check to see if this response indicates that this was ratelimited
         response, _audit_log = self._login_response(self.user_email, 'wrong_password')
         self._assert_response(response, success=False, value='Too many failed login attempts')

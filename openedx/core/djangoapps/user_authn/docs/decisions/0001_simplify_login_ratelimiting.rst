@@ -1,8 +1,16 @@
-How Login Rate Limiting Works
-=============================
+Simplify Login Rate Limiting
+============================
+
+Status
+------
+
+Draft
+
+Context
+-------
 
 1st party vs 3rd party login
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 edx-platform allows for both 1st party auth, where you provide the LMS with
 your credentials and it gives you back some session tokens, and also 3rd party
@@ -11,7 +19,7 @@ redirected to the LMS with a token from that third party which is exchanged for
 1st party(LMS) session tokens.
 
 Login User View
----------------
+~~~~~~~~~~~~~~~
 
 ..
     TODO: See if I can make this a link instead.
@@ -24,9 +32,9 @@ currently a pass-through call for the ``/api/user/v1/account/login_session``
 using a DRF view.  It is also called directly at ``/login_ajax``
 
 Rate limiting Logins
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
-Currently there are four different rate limiting implementations in use as a
+Currently there are five different rate limiting implementations in use as a
 part of the login flow.
 
 * `django-ratelimit`_ - A 3rd party rate limiting library that allows you to
@@ -47,7 +55,7 @@ part of the login flow.
   which is ``30 requests per 5 minute``  This is only applies to 1st party
   login attempts and does not count against 3rd party logins.
 
-* `djangorestframework rate limiting` - DRF provides a throttling
+* `djangorestframework rate limiting`_ - DRF provides a throttling
   capability that can be used with any DRF views.  This is not used for the
   login view but is applied to the ``/third_party_auth_context`` endpoint
   (``TPAContextView``) to rate limit 3rd party auth requests.  The default
@@ -65,7 +73,18 @@ part of the login flow.
   are to lock out the user for 30 minutes if 6 login failures occur over any
   period of time.
 
+  edx.org has this feature enabled.
+
+* `cloudflare rate limiting`_ - This is edx.org specific and not enabled by
+  default for Open edX.
+
 .. _django-ratelimit: https://django-ratelimit.readthedocs.io/en/stable/usage.html#usage-chapter
 .. _django-ratelimit-backend: https://django-ratelimit-backend.readthedocs.io/en/latest/
 .. _djangorestframework rate limiting: https://www.django-rest-framework.org/api-guide/throttling/
 .. _MAX_FAILED_LOGIN_ATTEMPTS: https://github.com/edx/edx-platform/blob/cd6064692681ab99912e3da3721cd857a0b313e9/common/djangoapps/student/models.py#L980
+.. _cloudflare rate limiting: https://www.cloudflare.com/rate-limiting/
+
+Decision
+--------
+
+TBD, just putting all this context down for now.

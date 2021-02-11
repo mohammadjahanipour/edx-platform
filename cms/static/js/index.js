@@ -186,15 +186,15 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
 
             $('.action-reload').bind('click', ViewUtils.reload);
 
-            if (!courseTabHref) {
+            if (courseTabHref === '#') {
                 $('#course-index-tabs .courses-tab').bind('click', showTab('courses-tab'));
             }
 
-            if (!libraryTabHref) {
+            if (libraryTabHref === '#') {
                 $('#course-index-tabs .libraries-tab').bind('click', showTab('libraries-tab'));
             }
 
-            if (!ArchivedTabHref) {
+            if (ArchivedTabHref === '#') {
                 $('#course-index-tabs .archived-courses-tab').bind('click', showTab('archived-courses-tab'));
             }
             if (window.location.hash) {

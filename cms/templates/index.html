@@ -318,7 +318,7 @@ from openedx.core.djangolib.js_utils import (
           % if split_studio_home and active_tab == 'libraries':
             <a href="${reverse('home')}">${_("Courses")}</a>
           % else:
-            <a>${_("Courses")}</a>
+            <a href="#">${_("Courses")}</a>
           % endif
        </li>
         % if archived_courses:
@@ -326,22 +326,23 @@ from openedx.core.djangolib.js_utils import (
             % if split_studio_home and active_tab == 'libraries':
                 <a href="${reverse('home') + '#archived-courses-tab' } " >${_("Archived Courses")}</a>
             % else:
-                <a>${_("Archived Courses")}</a>
+                <a href="#" >${_("Archived Courses")}</a>
             % endif
         </li>
         % endif
+
         % if libraries_enabled:
-        % if redirect_to_library_authoring_mfe:
-        <li><a href="${library_authoring_mfe_url}">${_("Libraries")}</a></li>
-        %else:
-         <li class="libraries-tab ${ 'active' if active_tab == 'libraries' else ''}">
-            % if split_studio_home:
-              <a href="${reverse('home_library')}">${_("Libraries")}</a>
-            % else:
-              <a>${_("Libraries")}</a>
+            % if redirect_to_library_authoring_mfe:
+            <li><a href="${library_authoring_mfe_url}">${_("Libraries")}</a></li>
+            %else:
+             <li class="libraries-tab ${ 'active' if active_tab == 'libraries' else ''}">
+                % if split_studio_home:
+                  <a href="${reverse('home_library')}">${_("Libraries")}</a>
+                % else:
+                  <a href="#" >${_("Libraries")}sss</a>
+                % endif
+             </li>
             % endif
-         </li>
-        % endif
         % endif
       </ul>
       % endif

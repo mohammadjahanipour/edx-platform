@@ -521,7 +521,7 @@ def course_listing(request):
     org = request.GET.get('org', '') if optimization_enabled else None
     courses_iter, in_process_course_actions = get_courses_accessible_to_user(request, org)
     user = request.user
-
+    # import pdb;pdb.set_trace()
     libraries = []
     if not split_library_view_on_dashboard() and LIBRARIES_ENABLED:
         libraries = _accessible_libraries_iter(request.user)
@@ -552,23 +552,23 @@ def course_listing(request):
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
     return render_to_response(u'index.html', {
-        u'courses': active_courses,
-        u'split_studio_home': split_library_view_on_dashboard(),
-        u'archived_courses': archived_courses,
-        u'in_process_course_actions': in_process_course_actions,
-        u'libraries_enabled': LIBRARIES_ENABLED,
-        u'redirect_to_library_authoring_mfe': should_redirect_to_library_authoring_mfe(),
-        u'library_authoring_mfe_url': LIBRARY_AUTHORING_MICROFRONTEND_URL,
-        u'libraries': [_format_library_for_view(lib, request) for lib in libraries],
-        u'show_new_library_button': get_library_creator_status(user) and not should_redirect_to_library_authoring_mfe(),
-        u'user': user,
-        u'request_course_creator_url': reverse('request_course_creator'),
-        u'course_creator_status': _get_course_creator_status(user),
-        u'rerun_creator_status': GlobalStaff().has_user(user),
-        u'allow_unicode_course_id': settings.FEATURES.get(u'ALLOW_UNICODE_COURSE_ID', False),
-        u'allow_course_reruns': settings.FEATURES.get(u'ALLOW_COURSE_RERUNS', True),
-        u'optimization_enabled': optimization_enabled,
-        u'active_tab': 'courses'
+        'courses': active_courses,
+        'split_studio_home': split_library_view_on_dashboard(),
+        'archived_courses': archived_courses,
+        'in_process_course_actions': in_process_course_actions,
+        'libraries_enabled': LIBRARIES_ENABLED,
+        'redirect_to_library_authoring_mfe': should_redirect_to_library_authoring_mfe(),
+        'library_authoring_mfe_url': LIBRARY_AUTHORING_MICROFRONTEND_URL,
+        'libraries': [_format_library_for_view(lib, request) for lib in libraries],
+        'show_new_library_button': get_library_creator_status(user) and not should_redirect_to_library_authoring_mfe(),
+        'user': user,
+        'request_course_creator_url': reverse('request_course_creator'),
+        'course_creator_status': _get_course_creator_status(user),
+        'rerun_creator_status': GlobalStaff().has_user(user),
+        'allow_unicode_course_id': settings.FEATURES.get(u'ALLOW_UNICODE_COURSE_ID', False),
+        'allow_course_reruns': settings.FEATURES.get(u'ALLOW_COURSE_RERUNS', True),
+        'optimization_enabled': optimization_enabled,
+        'active_tab': 'courses'
     })
 
 
@@ -604,12 +604,12 @@ def _format_library_for_view(library, request):
     """
 
     return {
-        u'display_name': library.display_name,
-        u'library_key': six.text_type(library.location.library_key),
-        u'url': reverse_library_url(u'library_handler', six.text_type(library.location.library_key)),
-        u'org': library.display_org_with_default,
-        u'number': library.display_number_with_default,
-        u'can_edit': has_studio_write_access(request.user, library.location.library_key),
+        'display_name': library.display_name,
+        'library_key': six.text_type(library.location.library_key),
+        'url': reverse_library_url(u'library_handler', six.text_type(library.location.library_key)),
+        'org': library.display_org_with_default,
+        'number': library.display_number_with_default,
+        'can_edit': has_studio_write_access(request.user, library.location.library_key),
     }
 
 

@@ -51,7 +51,7 @@ import lms.envs.common
 #   have more logical separation between LMS and Studio (CMS). It is also incompatible with the
 #   direction documented in OEP-45: Configuring and Operating Open edX:
 #   https://open-edx-proposals.readthedocs.io/en/latest/oep-0045-arch-ops-and-config.html
-from lms.envs.common import ( # unimport:skip
+from lms.envs.common import (  # unimport:skip
     USE_TZ, ALL_LANGUAGES, ASSET_IGNORE_REGEX,
     PARENTAL_CONSENT_AGE_LIMIT, REGISTRATION_EMAIL_PATTERNS_ALLOWED,
     # The following PROFILE_IMAGE_* settings are included as they are
@@ -122,11 +122,11 @@ from django.urls import reverse_lazy
 from lms.djangoapps.lms_xblock.mixin import LmsBlockMixin
 from cms.lib.xblock.authoring_mixin import AuthoringMixin
 from xmodule.modulestore.edit_info import EditInfoMixin
-from openedx.core.djangoapps.theming.helpers_dirs import ( # unimport:skip
+from openedx.core.djangoapps.theming.helpers_dirs import (  # unimport:skip
     get_themes_unchecked,
     get_theme_base_dirs_from_settings
 )
-from openedx.core.lib.license import LicenseMixin # unimport:skip
+from openedx.core.lib.license import LicenseMixin  # unimport:skip
 from openedx.core.lib.derived import derived, derived_collection_entry
 from openedx.core.release import doc_version
 
@@ -646,7 +646,7 @@ ELASTIC_SEARCH_CONFIG = [
 
 # These are standard regexes for pulling out info like course_ids, usage_ids, etc.
 # They are used so that URLs with deprecated-format strings still work.
-from lms.envs.common import ( # unimport:skip
+from lms.envs.common import (  # unimport:skip
     COURSE_KEY_PATTERN, COURSE_KEY_REGEX, COURSE_ID_PATTERN, USAGE_KEY_PATTERN, ASSET_KEY_PATTERN
 )
 

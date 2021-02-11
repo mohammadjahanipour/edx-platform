@@ -2,6 +2,7 @@
 
 
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import APIException
 
 
 class DiscussionDisabledError(ObjectDoesNotExist):
@@ -17,3 +18,8 @@ class ThreadNotFoundError(ObjectDoesNotExist):
 class CommentNotFoundError(ObjectDoesNotExist):
     """ Comment was not found. """
     pass  # lint-amnesty, pylint: disable=unnecessary-pass
+
+class DiscussionBlackedOutException(APIException):
+    """ Discussions are in blackout period. """
+    status_code = 403
+    default_detail = 'Discussions are in black out period.'
